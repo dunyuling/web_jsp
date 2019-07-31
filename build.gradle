@@ -1,0 +1,56 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.rc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //mysql 驱动
+    runtimeOnly 'mysql:mysql-connector-java'
+    //druid 数据库连接池
+    compile 'com.alibaba:druid:1.1.19'
+    //jdbc
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    //mybatis
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
+    //jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //热部署
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    //测试
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //spring.datasource.filters=stat,wall,log4j
+    //没有如下依赖,则spring.datasource.filters=stat,wall,log4j 配置导致无法启动应用,找不到log4j相关的class
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+}
